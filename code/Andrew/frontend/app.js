@@ -39,7 +39,7 @@ function createPostElement(post) {
     <div class="postDiv">
       <div class="topPost">
         <h4 class="postUsername">${post.username}</h4>
-        <small>${post.timestamp}</small>
+        <small>${post.created_at}</small>
       </div>
       <p>${post.content}</p>
     </div>
@@ -51,8 +51,14 @@ function createPostElement(post) {
 function addPost() {
   var content = document.querySelector('.inputTweet').value;
   var timestamp = formatTimestamp(new Date());
-  posts.push({username: username, content: content, timestamp: timestamp});
-  updateNoTweetVisibility();
+  axios.post('http://localhost:3000', {
+    username: username,
+    content: content,
+    created_at: timestamp
+  }).then((res) => {
+    console.log(res);
+  });
+  location.replace(location.href);
 }
 
 // Function to update the feed
@@ -63,6 +69,20 @@ function updateFeed() {
     const postElement = createPostElement(post);
     feed.appendChild(postElement);
   });
+}
+
+function fetchPosts() {
+  axios.get('http://localhost:3000')
+    .then((res) => {
+      console.log(res.data)
+      for (let i = 0; i < res.data.length; i++) {
+        posts.push(res.data[i]);
+      }
+      updateNoTweetVisibility();
+      updateFeed();
+    }).catch((err) => {
+      console.error(err);
+    });
 }
 
 // Event listeners for UI interactions
@@ -90,3 +110,4 @@ document.getElementById('modalOverlay').addEventListener('click', function() {
 });
 
 updateNoTweetVisibility();
+fetchPosts();

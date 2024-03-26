@@ -12,5 +12,5 @@ const routes = require('./routes');
 app.use('/', routes);
 
 app.listen(port, () => {
-    console.log(`server running on port ${port}`);
+    console.log(`Server running on port ${port}`);
 })

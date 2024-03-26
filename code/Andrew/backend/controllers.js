@@ -18,7 +18,7 @@ exports.postData = async (req, res) => {
     }
 };
 
-exports.deletePost = async(req, res) => {
+exports.deletePost = async (req, res) => {
     try {
         const { id } = req.params;
         await models.deletePostById(id);
