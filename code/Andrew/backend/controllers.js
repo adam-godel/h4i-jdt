@@ -16,7 +16,7 @@ exports.postData = async (req, res) => {
     } catch (err) {
         res.status(500).send(err.message);
     }
-}
+};
 
 exports.deletePost = async(req, res) => {
     try {
@@ -26,4 +26,4 @@ exports.deletePost = async(req, res) => {
     } catch (err) {
         res.status(500).send(err.message);
     }
-}
+};
